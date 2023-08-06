@@ -1,5 +1,7 @@
 # AmazonDapp
 
+DApp_Amazon: A decentralized application for shopping on the blockchain. Buy and sell products securely using cryptocurrency. #blockchain #DApp
+
 ## Technology Stack & Tools
 
 - Solidity (Writing Smart Contracts & Tests)
