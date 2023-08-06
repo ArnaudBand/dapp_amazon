@@ -2,5 +2,9 @@
 pragma solidity ^0.8.9;
 
 contract AmazonDapp {
-  string public name = "AmazonDapp";
+  address public owner;
+
+  constructor() {
+    owner = msg.sender;
+  }
 }

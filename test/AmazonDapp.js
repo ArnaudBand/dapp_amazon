@@ -5,14 +5,20 @@ const tokens = (n) => {
 }
 
 describe("AmazonDapp", () => {
-  let amazonDapp;
+  let amazonDapp, deployer, buyer;
   before(async () => {
-    const AmazonDapp = await ethers.getContractFactory("AmazonDapp")
-    amazonDapp = await AmazonDapp.deploy()
-    // await amazonDapp.deployed()
+    // Get signers
+    [deployer, buyer] = await ethers.getSigners();
+
+    // Deploy contract
+    const AmazonDapp = await ethers.getContractFactory("AmazonDapp");
+    amazonDapp = await AmazonDapp.deploy();
   });
 
-  it("Should have a name", async () => {
-    expect(await amazonDapp.name()).to.equal("AmazonDapp");
+  describe("Deployment", async () => {
+    it("Should have the owner", async () => {
+      let owner = await amazonDapp.owner();
+      expect(owner).to.equal(deployer.address);
+    });
   });
 })
