@@ -21,4 +21,16 @@ describe("AmazonDapp", () => {
       expect(owner).to.equal(deployer.address);
     });
   });
+
+  describe("ListProducts", async () => {
+    let transaction;
+    beforeEach(async () => {
+      transaction =await amazonDapp.connect(deployer).listProduct(1, "iPhone 12", "Elctronic", "Image", tokens(1), 5, 3);
+      await transaction.wait();
+    });
+    it("Should return item attribute", async () => {
+      const item = await amazonDapp.products(1);
+      expect(item.id).to.equal(1);
+    });
+  });
 })
