@@ -1,6 +1,6 @@
 # AmazonDapp
 
-DApp_Amazon: A decentralized application for shopping on the blockchain. Buy and sell products securely using cryptocurrency. #blockchain #DApp
+__DApp_Amazon: A decentralized application for shopping on the blockchain. Buy and sell products securely using cryptocurrency.__ #blockchain #DApp
 
 ## Technology Stack & Tools
 
@@ -15,6 +15,9 @@ DApp_Amazon: A decentralized application for shopping on the blockchain. Buy and
 
 ## Setting Up
 ### 1. Clone/Download the Repository
+```
+git clone git@github.com:ArnaudBand/dapp_amazon.git
+```
 
 ### 2. Install Dependencies:
 `$ npm install`
