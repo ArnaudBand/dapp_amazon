@@ -24,13 +24,21 @@ describe("AmazonDapp", () => {
 
   describe("ListProducts", async () => {
     let transaction;
+    const ID = 1;
+    const NAME = "iPhone 12";
+    const CATEGORY = "Electronic";
+    const IMAGE = "Image";
+    const PRICE = tokens(1);
+    const RATING = 5;
+    const QUANTITY = 3;
+
     beforeEach(async () => {
-      transaction =await amazonDapp.connect(deployer).listProduct(1, "iPhone 12", "Elctronic", "Image", tokens(1), 5, 3);
+      transaction =await amazonDapp.connect(deployer).listProduct(1, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
       await transaction.wait();
     });
     it("Should return item attribute", async () => {
-      const item = await amazonDapp.products(1);
-      expect(item.id).to.equal(1);
+      const item = await amazonDapp.products(ID);
+      expect(item.id).to.equal(ID);
     });
   });
 })
