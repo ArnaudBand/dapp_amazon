@@ -70,5 +70,11 @@ describe("AmazonDapp", () => {
       const orderCount = await amazonDapp.orderCount(buyer.address);
       expect(orderCount).to.equal(2);
     });
+
+    it("should add the order to the orders mapping", async () => {
+      const order = await amazonDapp.orders(buyer.address, ID);
+      expect(order.time).to.be.greaterThan(0);
+      expect(order.product.id).to.equal(ID);
+    });
   });
 })
