@@ -58,5 +58,8 @@ contract AmazonDapp {
     // Add order to orders mapping
     orderCount[msg.sender] += 1;
     orders[msg.sender][orderCount[msg.sender]] = order;
+
+    // Reduce quantity of product
+    product.quantity -= 1;
   }
 }
