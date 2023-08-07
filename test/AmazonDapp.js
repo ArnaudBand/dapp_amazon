@@ -6,6 +6,15 @@ const tokens = (n) => {
 
 describe("AmazonDapp", () => {
   let amazonDapp, deployer, buyer;
+
+  const ID = 1;
+  const NAME = "iPhone 12";
+  const CATEGORY = "Electronic";
+  const IMAGE = "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg";
+  const PRICE = tokens(1);
+  const RATING = 5;
+  const QUANTITY = 3;
+
   before(async () => {
     // Get signers
     [deployer, buyer] = await ethers.getSigners();
@@ -25,13 +34,6 @@ describe("AmazonDapp", () => {
 
   describe("ListProducts", async () => {
     let transaction;
-    const ID = 1;
-    const NAME = "iPhone 12";
-    const CATEGORY = "Electronic";
-    const IMAGE = "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/drone.jpg";
-    const PRICE = tokens(1);
-    const RATING = 5;
-    const QUANTITY = 3;
 
     beforeEach(async () => {
       transaction =await amazonDapp.connect(deployer).listProduct(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
@@ -46,6 +48,22 @@ describe("AmazonDapp", () => {
     });
     it("should emit a ListProduct event", async () => {
       expect(transaction).to.emit(amazonDapp, "ProductListed").withArgs(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
+    });
+  });
+
+  describe("PurchaseProduct", async () => {
+    let transaction;
+
+    beforeEach(async () => {
+      transaction =await amazonDapp.connect(deployer).listProduct(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
+      await transaction.wait();
+
+      transaction = await amazonDapp.connect(buyer).purchaseProduct(ID, { value: PRICE });
+    });
+
+    it("should upddate the contract balance", async () => {
+      const balance = await ethers.provider.getBalance(amazonDapp.address);
+      expect(balance).to.equal(PRICE);
     });
   });
 })
