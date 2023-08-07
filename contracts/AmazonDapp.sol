@@ -33,6 +33,7 @@ contract AmazonDapp {
   mapping(address => uint256) public orderCount;
 
   event ProductListed(string name, uint256 price, uint256 quantity);
+  event ProductPurchased(address buyer, uint256 orderId, uint256 productId);
 
   // List products
   function listProduct(uint256 _id, string memory _name, string memory _category, string memory _image, uint _price, uint256 _rating, uint256 _quantity) public onlyOwner {
@@ -61,5 +62,8 @@ contract AmazonDapp {
 
     // Reduce quantity of product
     products[_id].quantity = product.quantity - 1;
+
+    // Trigger event
+    emit ProductPurchased(msg.sender, orderCount[msg.sender], product.id);
   }
 }
