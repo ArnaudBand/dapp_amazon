@@ -14,6 +14,11 @@ contract AmazonDapp {
     uint256 quantity;
   }
 
+  struct Order {
+    uint256 time;
+    Product product;
+  }
+
   modifier onlyOwner() {
     require(msg.sender == owner, "Only owner can list products");
     _;
@@ -24,6 +29,8 @@ contract AmazonDapp {
   }
 
   mapping(uint256 => Product) public products;
+  mapping(address => uint256) public orderCount;
+  mapping(address => mapping(uint256 => Order)) public orders;
 
   event ProductListed(string name, uint256 price, uint256 quantity);
 
@@ -37,5 +44,15 @@ contract AmazonDapp {
 
     // Trigger event
     emit ProductListed(_name, _price, _quantity);
+  }
+
+  // Purchase products
+  function purchaseProduct(uint256 _id) public payable {
+
+    // Fetch product from mapping
+    Product memory product = products[_id];
+
+    // Get product from mapping
+    Order memory order = Order(block.timestamp, product);
   }
 }
