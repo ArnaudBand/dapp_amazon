@@ -76,5 +76,9 @@ describe("AmazonDapp", () => {
       expect(order.time).to.be.greaterThan(0);
       expect(order.product.id).to.equal(ID);
     });
+
+    it("should emit a PurchaseProduct event", async () => {
+      expect(transaction).to.emit(amazonDapp, "ProductPurchased").withArgs(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
+    });
   });
 })
