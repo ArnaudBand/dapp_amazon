@@ -61,9 +61,14 @@ describe("AmazonDapp", () => {
       transaction = await amazonDapp.connect(buyer).purchaseProduct(ID, { value: PRICE });
     });
 
-    it("should upddate the contract balance", async () => {
+    it("should update the contract balance", async () => {
       const balance = await ethers.provider.getBalance(amazonDapp.address);
       expect(balance).to.equal(PRICE);
+    });
+
+    it("should update the buyer's order count", async() => {
+      const orderCount = await amazonDapp.orderCount(buyer.address);
+      expect(orderCount).to.equal(2);
     });
   });
 })
