@@ -29,8 +29,8 @@ contract AmazonDapp {
   }
 
   mapping(uint256 => Product) public products;
-  mapping(address => uint256) public orderCount;
   mapping(address => mapping(uint256 => Order)) public orders;
+  mapping(address => uint256) public orderCount;
 
   event ProductListed(string name, uint256 price, uint256 quantity);
 
@@ -56,10 +56,10 @@ contract AmazonDapp {
     Order memory order = Order(block.timestamp, product);
 
     // Add order to orders mapping
-    orderCount[msg.sender] += 1;
+    orderCount[msg.sender]++;  // Increment order count
     orders[msg.sender][orderCount[msg.sender]] = order;
 
     // Reduce quantity of product
-    product.quantity -= 1;
+    products[_id].quantity = product.quantity - 1;
   }
 }
