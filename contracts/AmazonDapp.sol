@@ -53,6 +53,12 @@ contract AmazonDapp {
     // Fetch product from mapping
     Product memory product = products[_id];
 
+    // Require enough ether to purchase product
+    require(msg.value >= product.price, "Not enough ether to purchase product");
+
+    // Require product to be in stock
+    require(product.quantity > 0, "Product out of stock");
+
     // Get product from mapping
     Order memory order = Order(block.timestamp, product);
 
@@ -66,4 +72,6 @@ contract AmazonDapp {
     // Trigger event
     emit ProductPurchased(msg.sender, orderCount[msg.sender], product.id);
   }
+
+  // Withdraw funds
 }
