@@ -54,5 +54,9 @@ contract AmazonDapp {
 
     // Get product from mapping
     Order memory order = Order(block.timestamp, product);
+
+    // Add order to orders mapping
+    orderCount[msg.sender] += 1;
+    orders[msg.sender][orderCount[msg.sender]] = order;
   }
 }
