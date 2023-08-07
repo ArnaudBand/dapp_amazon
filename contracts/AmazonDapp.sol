@@ -14,19 +14,28 @@ contract AmazonDapp {
     uint256 quantity;
   }
 
+  modifier onlyOwner() {
+    require(msg.sender == owner, "Only owner can list products");
+    _;
+  }
+
   constructor() {
     owner = msg.sender;
   }
 
   mapping(uint256 => Product) public products;
 
+  event ProductListed(string name, uint256 price, uint256 quantity);
+
   // List products
-  function listProduct(uint256 _id, string memory _name, string memory _category, string memory _image, uint _price, uint256 _rating, uint256 _quantity) public {
-    require(msg.sender == owner, "Only owner can list products");
+  function listProduct(uint256 _id, string memory _name, string memory _category, string memory _image, uint _price, uint256 _rating, uint256 _quantity) public onlyOwner {
     // Add product to products array
     Product memory product = Product(_id, _name, _category, _image, _price, _rating, _quantity);
 
     // Add product to mapping
     products[_id] = product;
+
+    // Trigger event
+    emit ProductListed(_name, _price, _quantity);
   }
 }

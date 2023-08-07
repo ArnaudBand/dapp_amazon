@@ -13,6 +13,7 @@ describe("AmazonDapp", () => {
     // Deploy contract
     const AmazonDapp = await ethers.getContractFactory("AmazonDapp");
     amazonDapp = await AmazonDapp.deploy();
+    await amazonDapp.deployed();
   });
 
   describe("Deployment", async () => {
@@ -33,12 +34,18 @@ describe("AmazonDapp", () => {
     const QUANTITY = 3;
 
     beforeEach(async () => {
-      transaction =await amazonDapp.connect(deployer).listProduct(1, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
+      transaction =await amazonDapp.connect(deployer).listProduct(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
       await transaction.wait();
     });
-    it("Should return item attribute", async () => {
+    it("only owner can list new product", async () => {
+      await expect(amazonDapp.connect(buyer).listProduct(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY)).to.be.revertedWith("Only owner can list products");
+    });
+   it("Should return item attribute", async () => {
       const item = await amazonDapp.products(ID);
       expect(item.id).to.equal(ID);
+    });
+    it("should emit a ListProduct event", async () => {
+      expect(transaction).to.emit(amazonDapp, "ProductListed").withArgs(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
     });
   });
 })
