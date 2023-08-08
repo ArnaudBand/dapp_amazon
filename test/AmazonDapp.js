@@ -81,4 +81,35 @@ describe("AmazonDapp", () => {
       expect(transaction).to.emit(amazonDapp, "ProductPurchased").withArgs(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
     });
   });
+
+  describe("Withdraw", async () => {
+    let balanceBefore;
+
+    beforeEach(async () => {
+      // List product
+      let transaction = await amazonDapp.connect(deployer).listProduct(ID, NAME, CATEGORY, IMAGE, PRICE, RATING, QUANTITY);
+      await transaction.wait();
+
+      // Purchase product
+      transaction = await amazonDapp.connect(buyer).purchaseProduct(ID, { value: PRICE });
+      await transaction.wait();
+
+      // Get balance before withdraw
+      balanceBefore = await ethers.provider.getBalance(deployer.address);
+
+      // Withdraw balance
+      transaction = await amazonDapp.connect(deployer).withdraw();
+      await transaction.wait();
+    });
+
+    it("should update the owner balance", async() => {
+      const balance = await ethers.provider.getBalance(deployer.address);
+      expect(balance).to.be.greaterThan(balanceBefore);
+    });
+
+    it("should update the contract balance", async () => {
+      const balance = await ethers.provider.getBalance(amazonDapp.address);
+      expect(balance).to.equal(0);
+    });
+  });
 })
