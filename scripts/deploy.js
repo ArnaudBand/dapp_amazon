@@ -5,8 +5,7 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat")
-const { items } = require("../src/items.json");
-
+const { items } = require("../src/items.json")
 
 const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), 'ether')
@@ -33,10 +32,10 @@ async function main() {
       tokens(item.price),
       item.rating,
       item.stock
-    )
+    );
     await transaction.wait();
 
-    console.log(`Product ${item.name} listed!`)
+    console.log(`Product ${item.name} listed!`);
   }
   
 }
@@ -47,3 +46,5 @@ main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });
+
+// AmazonDapp deployed to: 0x90522a06D0740479a9B370080e8CfC911D256cf2
