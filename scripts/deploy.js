@@ -5,14 +5,15 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat")
-const { items } = require("../src/items.json")
+const { items } = require("../src/items.json");
+
 
 const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
 async function main() {
-  const [deployer] = ethers.getSigners();
+  const [deployer] = await ethers.getSigners();
 
   // Deployer AmazonDapp
   const AmazonDapp = await hre.ethers.getContractFactory("AmazonDapp");
@@ -31,7 +32,7 @@ async function main() {
       item.image,
       tokens(item.price),
       item.rating,
-      item.quantity
+      item.stock
     )
     await transaction.wait();
 
