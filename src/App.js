@@ -13,14 +13,21 @@ import AmazonDapp from './abis/AmazonDapp.json'
 import config from './config.json'
 
 function App() {
+
+  const [provider, setProvider] = useState(null);
   const [account, setAccount] = useState('');
 
   const logBlockchainData = async () => {
 
+    // Connect to blockchain
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
 
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const account = ethers.utils.getAddress(accounts[0]);
-    setAccount(account);
+    const network = await provider.getNetwork();
+    // console.log('network', network);
+
+    // Connect to contract
+    const amazonDapp = new ethers.Contract(config[31337].AmazonDapp.address, AmazonDapp, provider);
   }
 
   useEffect(() => {

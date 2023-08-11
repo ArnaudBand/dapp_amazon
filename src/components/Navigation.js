@@ -7,7 +7,6 @@ const Navigation = ({ account, setAccount }) => {
       const account = await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
       // const account = ethers.utils.getAddress(accounts[0]);
       setAccount(account);
-      console.log('account', account);
     } catch (error) {
       console.log('error', error);
     }
