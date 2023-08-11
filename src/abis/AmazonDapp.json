@@ -9,6 +9,31 @@
         "inputs": [
             {
                 "indexed": false,
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "quantity",
+                "type": "uint256"
+            }
+        ],
+        "name": "ProductListed",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
                 "internalType": "address",
                 "name": "buyer",
                 "type": "address"
@@ -22,99 +47,12 @@
             {
                 "indexed": false,
                 "internalType": "uint256",
-                "name": "itemId",
+                "name": "productId",
                 "type": "uint256"
             }
         ],
-        "name": "Buy",
+        "name": "ProductPurchased",
         "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "cost",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "quantity",
-                "type": "uint256"
-            }
-        ],
-        "name": "List",
-        "type": "event"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_id",
-                "type": "uint256"
-            }
-        ],
-        "name": "buy",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "items",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            },
-            {
-                "internalType": "string",
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "category",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "image",
-                "type": "string"
-            },
-            {
-                "internalType": "uint256",
-                "name": "cost",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "rating",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "stock",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
     },
     {
         "inputs": [
@@ -140,7 +78,7 @@
             },
             {
                 "internalType": "uint256",
-                "name": "_cost",
+                "name": "_price",
                 "type": "uint256"
             },
             {
@@ -150,11 +88,11 @@
             },
             {
                 "internalType": "uint256",
-                "name": "_stock",
+                "name": "_quantity",
                 "type": "uint256"
             }
         ],
-        "name": "list",
+        "name": "listProduct",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -222,7 +160,7 @@
                     },
                     {
                         "internalType": "uint256",
-                        "name": "cost",
+                        "name": "price",
                         "type": "uint256"
                     },
                     {
@@ -232,12 +170,12 @@
                     },
                     {
                         "internalType": "uint256",
-                        "name": "stock",
+                        "name": "quantity",
                         "type": "uint256"
                     }
                 ],
-                "internalType": "struct AmazonDapp.Item",
-                "name": "item",
+                "internalType": "struct AmazonDapp.Product",
+                "name": "product",
                 "type": "tuple"
             }
         ],
@@ -255,6 +193,68 @@
             }
         ],
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "name": "products",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "id",
+                "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "category",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "image",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "price",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "rating",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "quantity",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_id",
+                "type": "uint256"
+            }
+        ],
+        "name": "purchaseProduct",
+        "outputs": [],
+        "stateMutability": "payable",
         "type": "function"
     },
     {
