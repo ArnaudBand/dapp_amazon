@@ -15,7 +15,12 @@ import config from './config.json'
 function App() {
 
   const [provider, setProvider] = useState(null);
+  const [amazonDapp, setAmazonDapp] = useState(null);
   const [account, setAccount] = useState('');
+
+  const [electronics, setElectronics] = useState([]);
+  const [clothing, setClothing] = useState([]);
+  const [toys, setToys] = useState([]);
 
   const logBlockchainData = async () => {
 
@@ -28,6 +33,24 @@ function App() {
 
     // Connect to contract
     const amazonDapp = new ethers.Contract(config[31337].AmazonDapp.address, AmazonDapp, provider);
+    setAmazonDapp(amazonDapp);
+
+    // Load products
+    const products = [];
+
+    for(let i = 0; i < 9; i++) {
+      const product = await amazonDapp.products(i + 1);
+      products.push(product);
+    }
+
+    const electronics = products.filter(product => product.category === 'electronics');
+    const clothing = products.filter(product => product.category === 'clothing');
+    const toys = products.filter(product => product.category === 'toys');
+
+    setElectronics(electronics);
+    setClothing(clothing);
+    setToys(toys);
+
   }
 
   useEffect(() => {
