@@ -4,8 +4,9 @@ const Navigation = ({ account, setAccount }) => {
 
   const connectWallet = async () => {
     try {
-      const account = await window.ethereum.request({ method: 'wallet_requestPermissions', params: [{ eth_accounts: {} }] });
-      // const account = ethers.utils.getAddress(accounts[0]);
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = ethers.utils.getAddress(accounts[0]);
+      // console.log('account', account);
       setAccount(account);
     } catch (error) {
       console.log('error', error);
