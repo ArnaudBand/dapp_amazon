@@ -22,6 +22,10 @@ function App() {
   const [clothing, setClothing] = useState([]);
   const [toys, setToys] = useState([]);
 
+  const togglePop = () => {
+    console.log('togglePop');
+  }
+
   const logBlockchainData = async () => {
 
     // Connect to blockchain
@@ -38,7 +42,7 @@ function App() {
     // Load products
     const products = [];
 
-    for(let i = 0; i < 9; i++) {
+    for (let i = 0; i < 9; i++) {
       const product = await amazonDapp.products(i + 1);
       products.push(product);
     }
@@ -61,7 +65,13 @@ function App() {
     <div>
       <Navigation account={account} setAccount={setAccount} />
       <h2>Welcome to AmazonDapp</h2>
-
+      {electronics && clothing && toys && (
+        <>
+          <Section title={"Electronics & Gadgets"} items={electronics} togglePop={togglePop} />
+          <Section title={"Clothing & Jewelry"} items={clothing} togglePop={togglePop} />
+          <Section title={"Toys & Gaming"} items={toys} togglePop={togglePop} />
+        </>
+      )}
     </div>
   );
 }
